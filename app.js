@@ -26,7 +26,6 @@ var budgetController = (() => {
     addItem: (type, des, val) => {
       var newItem, ID;
       // CREATE NEW ID
-      console.log(type, des, val);
       if (data.allItems[type].length > 0) {
         ID = data.allItems[type][data.allItems[type].length - 1].id + 1;
       } else {
@@ -58,7 +57,9 @@ var UIController = (() => {
     inputType: ".add__type",
     inputDescription: ".add__description",
     inputValue: ".add__value",
-    inputBtn: ".add__btn"
+    inputBtn: ".add__btn",
+    incomeContainer: ".income__list",
+    expenseContainer: ".expenses__list"
   };
 
   return {
@@ -69,6 +70,29 @@ var UIController = (() => {
         value: document.querySelector(DOMstrings.inputValue).value
       };
     },
+
+    addListItem: (obj, type) => {
+      var html, newHtml, element;
+      // CREATE HTML STRING WITH PLACEHOLDER TEXT
+      if (type === "inc") {
+        element = DOMstrings.incomeContainer;
+
+        html =
+          '<div class="item clearfix" id="income-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
+      } else if (type === "exp") {
+        element = DOMstrings.expenseContainer;
+
+        html =
+          '<div class="item clearfix" id="expense-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__percentage">21%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
+      }
+      // REPLACE PLACEHOLDER TEXT WITH DATA
+      newHtml = html.replace("%id%", obj.id);
+      newHtml = newHtml.replace("%description%", obj.description);
+      newHtml = newHtml.replace("%value%", obj.value);
+      // INSERT HTML INTO THE DOM
+      document.querySelector(element).insertAdjacentHTML("beforeend", newHtml);
+    },
+
     getDOMstrings: () => {
       return DOMstrings;
     }
@@ -100,7 +124,7 @@ var controller = ((budgetCtrl, UICtrl) => {
       input.value
     );
     //3.- Add item to the UI
-    //
+    UICtrl.addListItem(newItem, input.type);
     //4.- Calculate the budget
     //
     //5.- Display budget on UI
@@ -109,6 +133,7 @@ var controller = ((budgetCtrl, UICtrl) => {
   return {
     init: () => {
       setupEventListeners();
+      console.log("Application has Started");
     }
   };
 })(budgetController, UIController);
