@@ -11,6 +11,14 @@ var budgetController = (() => {
     this.value = value;
   };
 
+  var calculateTotal = type => {
+    var sum = 0;
+    data.allItems[type].forEach(cur => {
+      sum += cur.value;
+    });
+    data.totals[type] = sum;
+  };
+
   var data = {
     allItems: {
       exp: [],
@@ -19,7 +27,9 @@ var budgetController = (() => {
     totals: {
       exp: 0,
       inc: 0
-    }
+    },
+    budget: 0,
+    percentage: -1
   };
 
   return {
@@ -43,7 +53,31 @@ var budgetController = (() => {
       return newItem;
     },
 
-    testing: () => {
+    calculateBudget: () => {
+      // calculate total income & expenses
+      calculateTotal("exp");
+      calculateTotal("inc");
+
+      // calculate the budget: incume - expenses
+      data.budget = data.totals.inc - data.totals.exp;
+      // calculate percentage of income spent
+      if (data.totals.inc > 0) {
+        data.percentage = Math.round((data.totals.exp / data.totals.inc) * 100);
+      } else {
+        data.percentage = -1;
+      }
+    },
+
+    getBudget: function() {
+      return {
+        budget: data.budget,
+        totalInc: data.totals.inc,
+        totalExp: data.totals.exp,
+        percentage: data.percentage
+      };
+    },
+
+    testing: function() {
       console.log(data);
     }
   };
@@ -94,7 +128,6 @@ var UIController = (() => {
     },
 
     clearFields: () => {
-      console.log("clearing fields started");
       var fields, fieldsArr;
       var fields = document.querySelectorAll(
         DOMstrings.inputDescription + ", " + DOMstrings.inputValue
@@ -131,8 +164,11 @@ var controller = ((budgetCtrl, UICtrl) => {
 
   var updateBudget = () => {
     //1.- Calculate the budget
+    budgetCtrl.calculateBudget();
     //2.- Return the Budget
+    var budget = budgetCtrl.getBudget();
     //3.- Display budget on UI
+    console.log(budget);
   };
 
   var ctrlAddItem = () => {
