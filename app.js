@@ -10,6 +10,17 @@ var budgetController = (() => {
     this.description = description;
     this.value = value;
   };
+
+  var data = {
+      allItems: {
+          exp: [],
+          inc: []
+      }
+      totals: {
+          exp: 0,
+          inc: 0
+      }
+  }
 })();
 
 // UI CONTROLLER
