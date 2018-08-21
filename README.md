@@ -22,3 +22,17 @@ Budget application built with JavaSript
 - created function to add a new item into the data object
 
 - created function to push new item into the DOM as an HTML string
+
+#[8/20]
+
+- created function to clear the input fields after a new item is entered
+
+- converted value field into number on the data object (for future budget calculations)
+
+- added conditionals to prevent false inputs
+
+- started calculating budget and percentage
+
+- updated budget, percentage and totals on the UI
+
+- all values on the UI are reset after application load
