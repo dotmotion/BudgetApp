@@ -97,7 +97,8 @@ var UIController = (() => {
     budgetLabel: ".budget__value",
     incomeLabel: ".budget__income--value",
     expenseLabel: ".budget__expenses--value",
-    percentageLabel: ".budget__expenses--percentage"
+    percentageLabel: ".budget__expenses--percentage",
+    container: ".container"
   };
 
   return {
@@ -116,12 +117,12 @@ var UIController = (() => {
         element = DOMstrings.incomeContainer;
 
         html =
-          '<div class="item clearfix" id="income-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-circle-outline"></i></button></div></div></div>';
+          '<div class="item clearfix" id="inc-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-circle-outline"></i></button></div></div></div>';
       } else if (type === "exp") {
         element = DOMstrings.expenseContainer;
 
         html =
-          '<div class="item clearfix" id="expense-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__percentage">21%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-circle-outline"></i></button></div></div></div>';
+          '<div class="item clearfix" id="exp-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__percentage">21%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-circle-outline"></i></button></div></div></div>';
       }
       // REPLACE PLACEHOLDER TEXT WITH DATA
       newHtml = html.replace("%id%", obj.id);
@@ -179,6 +180,9 @@ var controller = ((budgetCtrl, UICtrl) => {
       if (e.keyCode === 13 || e.which === 13) {
         ctrlAddItem();
       }
+      document
+        .querySelector(DOM.container)
+        .addEventListener("click", ctrlDeleteItem);
     });
   };
 
@@ -213,6 +217,25 @@ var controller = ((budgetCtrl, UICtrl) => {
 
       //5.- Calculate & update Budget
       updateBudget();
+    }
+  };
+
+  var ctrlDeleteItem = e => {
+    var itemID, splitID, ID;
+    console.log(e.target.parentNode.parentNode.parentNode.parentNode.id);
+    itemID = e.target.parentNode.parentNode.parentNode.parentNode.id;
+
+    if (itemID) {
+      // inc-1 || exp-1
+      splitID = itemID.split("-");
+      type = splitID[0];
+      ID = splitID[1];
+
+      //1.- delete item from data structure
+
+      //2.- delete item from the UI
+
+      //3.- update and show the new budget
     }
   };
 
