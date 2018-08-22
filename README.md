@@ -36,3 +36,7 @@ Budget application built with JavaSript
 - updated budget, percentage and totals on the UI
 
 - all values on the UI are reset after application load
+
+#[8/21]
+
+- added functionality to delete items from UI and data structure
