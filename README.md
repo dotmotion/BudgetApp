@@ -2,7 +2,32 @@
 
 Budget application built with JavaSript
 
-## [LOG]
+##To-Do list:
+
+#### 1.- Handle Inputs
+
+- [x] Add Event Handler to submit button
+- [x] Get input Values
+- [x] Add new Item to data structure
+- [x] Add new item to UI
+- [x] Calculate Budget
+- [x] Update the UI
+
+#### 2.- Delete Items
+
+- [x] Add event handler to delete button
+- [x] Delete item from data structure
+- [x] Delete item from UI
+- [x] Recalculate budget and update UI
+
+#### 3.- UI / UX changes
+
+- [] Calculate and update percentages on UI
+- [] Display current month and year on UI
+- [] Number Formatting
+- [] UX overhaul
+
+# [JS Build LOG]
 
 ### [8/19]
 
