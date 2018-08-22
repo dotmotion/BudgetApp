@@ -2,7 +2,7 @@
 
 Budget application built with JavaSript
 
-##To-Do list:
+## To-Do list:
 
 #### 1.- Handle Inputs
 
@@ -22,14 +22,14 @@ Budget application built with JavaSript
 
 #### 3.- UI / UX changes
 
-- [] Calculate and update percentages on UI
-- [] Display current month and year on UI
-- [] Number Formatting
-- [] UX overhaul
+- [ ] Calculate and update percentages on UI
+- [ ] Display current month and year on UI
+- [ ] Number Formatting
+- [ ] UX overhaul
 
-# [JS Build LOG]
+## [JS Build LOG]
 
-### [8/19]
+#### [8/19]
 
 - started project with HTML and CSS skeleton
 
@@ -48,7 +48,7 @@ Budget application built with JavaSript
 
 - created function to push new item into the DOM as an HTML string
 
-#[8/20]
+#### [8/20]
 
 - created function to clear the input fields after a new item is entered
 
@@ -62,6 +62,6 @@ Budget application built with JavaSript
 
 - all values on the UI are reset after application load
 
-#[8/21]
+#### [8/21]
 
 - added functionality to delete items from UI and data structure
