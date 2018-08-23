@@ -4,7 +4,19 @@ var budgetController = (() => {
     this.id = id;
     this.description = description;
     this.value = value;
+    this.percentage = -1;
   };
+
+  Expense.prototype.calcPercentage = function(totalIncome) {
+    if (totalIncome > 0) {
+      this.percentage = Math.round((this.value / totalIncome) * 100);
+    } else {
+      this.percentage = -1;
+    }
+  };
+
+  Expense.prototype.getPercentage = () => this.percentage;
+
   var Income = function(id, description, value) {
     this.id = id;
     this.description = description;
@@ -56,9 +68,7 @@ var budgetController = (() => {
     deleteItem: (type, id) => {
       var index;
       // id = 3
-      var ids = data.allItems[type].map(current => {
-        return current.id;
-      });
+      var ids = data.allItems[type].map(current => current.id);
       index = ids.indexOf(id);
 
       if (index !== -1) {
@@ -81,7 +91,18 @@ var budgetController = (() => {
       }
     },
 
-    getBudget: function() {
+    calculatePercentages: () => {
+      data.allItems.exp.forEach(function(cur) {
+        cur.calcPercentage(data.totals.inc);
+      });
+    },
+
+    getPercentages: function() {
+      var allPerc = data.allItems.exp.map(cur => cur.percentage);
+      return allPerc;
+    },
+
+    getBudget: () => {
       return {
         budget: data.budget,
         totalInc: data.totals.inc,
@@ -213,6 +234,15 @@ var controller = ((budgetCtrl, UICtrl) => {
     UICtrl.displayBudget(budget);
   };
 
+  var updatePercentages = () => {
+    //1.- calculate percentages
+    budgetCtrl.calculatePercentages();
+    //2.- read percentage from budget controller
+    var percentages = budgetCtrl.getPercentages();
+    //3.- update UI with the new percentages
+    console.log(percentages);
+  };
+
   var ctrlAddItem = () => {
     var input, newItem;
 
@@ -235,6 +265,9 @@ var controller = ((budgetCtrl, UICtrl) => {
 
       //5.- Calculate & update Budget
       updateBudget();
+
+      //6.- update percentages
+      updatePercentages();
     }
   };
 
@@ -256,6 +289,8 @@ var controller = ((budgetCtrl, UICtrl) => {
       UICtrl.deleteListItem(itemID);
       // 3.- update and show the new budget
       updateBudget();
+      //4.- update percentages
+      updatePercentages();
     }
   };
 
