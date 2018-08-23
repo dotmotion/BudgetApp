@@ -155,6 +155,12 @@ var UIController = (() => {
     return (type === "exp" ? "-" : "+") + " " + int + "." + dec;
   };
 
+  var nodeListForEach = (list, callback) => {
+    for (i = 0; i < list.length; i++) {
+      callback(list[i], i);
+    }
+  };
+
   return {
     getinput: () => {
       return {
@@ -235,12 +241,6 @@ var UIController = (() => {
     displayPercentages: percentages => {
       var fields = document.querySelectorAll(DOMstrings.expensesPercLabel); // get node list
 
-      var nodeListForEach = (list, callback) => {
-        for (i = 0; i < list.length; i++) {
-          callback(list[i], i);
-        }
-      };
-
       nodeListForEach(fields, (current, index) => {
         if (percentages[index] > 0) {
           current.textContent = percentages[index] + "%";
@@ -277,6 +277,19 @@ var UIController = (() => {
         months[month] + " " + year;
     },
 
+    changedType: () => {
+      var fields = document.querySelectorAll(
+        DOMstrings.inputType
+        +"," + DOMstrings.inputDescription
+        +"," + DOMstrings.inputValue
+      );
+      nodeListForEach(fields, cur => {
+        cur.classList.toggle("red-focus");
+      });
+
+      document.querySelector(DOMstrings.inputBtn).classList.toggle("red");
+    },
+
     getDOMstrings: () => {
       return DOMstrings;
     }
@@ -290,14 +303,20 @@ var controller = ((budgetCtrl, UICtrl) => {
   var setupEventListeners = () => {
     var DOM = UICtrl.getDOMstrings();
     document.querySelector(DOM.inputBtn).addEventListener("click", ctrlAddItem);
+
     document.addEventListener("keypress", e => {
       if (e.keyCode === 13 || e.which === 13) {
         ctrlAddItem();
       }
-      document
-        .querySelector(DOM.container)
-        .addEventListener("click", ctrlDeleteItem);
     });
+
+    document
+      .querySelector(DOM.container)
+      .addEventListener("click", ctrlDeleteItem);
+
+    document
+      .querySelector(DOM.inputType)
+      .addEventListener('change', UICtrl.changedType);
   };
 
   var updateBudget = () => {
