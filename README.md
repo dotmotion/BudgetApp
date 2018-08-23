@@ -22,9 +22,9 @@ Budget application built with JavaSript
 
 #### 3.- UI / UX changes
 
-- [ ] Calculate and update percentages on UI
-- [ ] Display current month and year on UI
-- [ ] Number Formatting
+- [x] Calculate and update percentages on UI
+- [x] Number Formatting
+- [x] Display current month and year on UI
 - [ ] UX overhaul
 
 ## [JS Build LOG]
@@ -65,3 +65,13 @@ Budget application built with JavaSript
 #### [8/21]
 
 - added functionality to delete items from UI and data structure
+
+### [8/22]
+
+- added functionality to calculate, update and show the percentages
+
+- added method to format the numbers on the UI
+
+- got date (month & year) and updated them on the UI
+
+- edited UX to change color depending on the selected type
