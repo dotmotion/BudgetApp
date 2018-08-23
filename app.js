@@ -136,6 +136,24 @@ var UIController = (() => {
     expensesPercLabel: ".item__percentage"
   };
 
+  var formatNumber = (num, type) => {
+    var numSplit, int, dec;
+    // get absolute number
+    num = Math.abs(num);
+    // add exactly 2 decimal numbers (will become a string)
+    num = num.toFixed(2);
+    //comma separating thousands
+    numSplit = num.split(".");
+    int = numSplit[0];
+    if (int.length > 3) {
+      int = int.substr(0, int.length - 3) + "," + int.substr(int.length - 3, 3); //input 25310, output 25,310
+    }
+
+    dec = numSplit[1];
+
+    return (type === "exp" ? "-" : "+") + " " + int + "." + dec;
+  };
+
   return {
     getinput: () => {
       return {
@@ -162,7 +180,7 @@ var UIController = (() => {
       // REPLACE PLACEHOLDER TEXT WITH DATA
       newHtml = html.replace("%id%", obj.id);
       newHtml = newHtml.replace("%description%", obj.description);
-      newHtml = newHtml.replace("%value%", obj.value);
+      newHtml = newHtml.replace("%value%", formatNumber(obj.value, type));
       // INSERT HTML INTO THE DOM
       document.querySelector(element).insertAdjacentHTML("beforeend", newHtml);
     },
@@ -188,10 +206,20 @@ var UIController = (() => {
     },
 
     displayBudget: obj => {
-      document.querySelector(DOMstrings.budgetLabel).textContent = obj.budget;
-      document.querySelector(DOMstrings.incomeLabel).textContent = obj.totalInc;
-      document.querySelector(DOMstrings.expenseLabel).textContent =
-        obj.totalExp;
+      var type;
+      obj.budget > 0 ? (type = "inc") : (type = "exp");
+
+      document.querySelector(DOMstrings.budgetLabel).textContent = formatNumber(
+        obj.budget,
+        type
+      );
+      document.querySelector(DOMstrings.incomeLabel).textContent = formatNumber(
+        obj.totalInc,
+        "inc"
+      );
+      document.querySelector(
+        DOMstrings.expenseLabel
+      ).textContent = formatNumber(obj.totalExp, "exp");
       document.querySelector(DOMstrings.percentageLabel).textContent =
         obj.percentage;
 
