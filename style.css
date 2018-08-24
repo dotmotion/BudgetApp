@@ -40,7 +40,7 @@ body {
 .top {
   height: 40vh;
   background-image: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)),
-    url(back.png);
+    url(back-dark.png);
   background-size: cover;
   background-position: center;
   position: relative;
@@ -307,4 +307,15 @@ h2 {
 }
 .unpaid:hover .item__description {
   font-weight: 900;
+}
+
+/* Dark Theme */
+
+.dark {
+  background: #16191b;
+  color: #e2e6e8;
+}
+
+.add {
+  border-bottom: 1px solid #e2e6e8;
 }
