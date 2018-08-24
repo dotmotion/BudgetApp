@@ -25,7 +25,7 @@ Budget application built with JavaSript
 - [x] Calculate and update percentages on UI
 - [x] Number Formatting
 - [x] Display current month and year on UI
-- [ ] UX overhaul
+- [x] UX changes
 
 ## [JS Build LOG]
 
